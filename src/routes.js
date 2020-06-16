@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import dotenv from 'dotenv';
-dotenv.config({ path: '.env' });
+dotenv.config({ path: '.env.local' });
 
 const routes = Router();
 

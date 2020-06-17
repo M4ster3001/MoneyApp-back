@@ -4,37 +4,38 @@ import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import path from 'path';
 
-import jwtConfig from './config/jwt';
-import auth from './middleware/authenticate';
-
 dotenv.config({ path: '.env.local' });
 
 const routes = Router();
+
+//Middleware
+import auth from './middleware/authenticate';
+import { Login, User } from './middleware/validation';
+ 
+//Controllers
+import BillingCycles from './controllers/billingCycleController';
+const BillingCycle = new BillingCycles();
+
+import Users from './controllers/usersController';
+const UserController = new Users();
+
 
 routes.get( '/', ( req, res ) => { res.status( 200 ).json({ message: 'Ok get' }) });
 routes.post( '/', ( req, res ) => { res.status( 200 ).json({ message: 'Ok post' }) });
 
 routes.get( '/login', ( req, res ) => { res.status( 200 ).json({ message: 'Ok login' }) } );
 
-routes.post( '/login', ( req, res ) => {
+//Users
+routes.post( '/login', User.validations, UserController.login );
+routes.get( '/user/register', User.validations, UserController.insert );
+routes.get( '/user/update/:id', [ auth, User.validations ], UserController.update );
+routes.get( '/user/delete/:id', [ auth, User.validations ], UserController.del );
 
-    if( req.body.user == 'aldo' & req.body.pwd == 'aldo123' ) {
-
-        const id = 1;
-        const privateKey = fs.readFileSync( path.resolve('src/private.key'), 'utf-8' );
-        const token = jwt.sign({ id }, privateKey, jwtConfig);
-
-        res.cookie( "token", token, {
-            maxAge: jwtConfig.expiresIn
-        } )
-        return res.json({ auth: true, token: token });
-
-    }
-
-    return res.status( 500 ).json({ message: 'Login inválido' });  
-} );
-
-routes.get( '/home', auth, ( req, res ) => { return res.send('foi') });
+//Billing routes
+routes.get( '/billing', auth, BillingCycle.index );
+routes.post( '/billing', auth, BillingCycle.insert );
+routes.put( '/billing/update/:id', auth, BillingCycle.update );
+routes.delete( '/billing/delete/:id', auth, BillingCycle.del );
 
 routes.post( '/logout', ( req, res ) => {
 

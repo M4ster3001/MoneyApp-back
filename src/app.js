@@ -9,7 +9,6 @@ import helmet from 'helmet';
 
 import optCors from './config/cors.js';
 
-
 const app = express();
 
 app.use( cors( optCors ) );

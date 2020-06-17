@@ -1,11 +1,33 @@
+import 'babel-polyfill';
 import app from './app';
+import mongoose, { mongo } from 'mongoose';
 
-app.set( 'PORT', process.env.PORT || 3334 )
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
 
-if( app.listen() ) {
+mongoose.Promise = global.Promise;
+
+mongoose.connect( process.env.DB, 
+    { 
+        useUnifiedTopology: true, 
+        useNewUrlParser: true,
+        useFindAndModify: false
+    } 
+)
+.then( ( ) => {
     
-    let server = app.listen();
-    server.close();
-}
+    app.set( 'PORT', process.env.PORT || 3334 )
+    
+    if( app.listen() ) {
+        
+        let server = app.listen();
+        server.close();
+    }
+    
+    const server = app.listen( app.get( 'PORT' ), () => { console.log( `Servidor rodando na porta ${ app.get( 'PORT' ) }` ) } );
 
-const server = app.listen( app.get( 'PORT' ), () => { console.log( `Servidor rodando na porta ${ app.get( 'PORT' ) }` ) } )
+} ).catch( ( er ) => {
+
+    console.log( er ); 
+    return;
+})

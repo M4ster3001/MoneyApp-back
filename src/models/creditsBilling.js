@@ -24,6 +24,10 @@ const creditSchema = new Schema({
         uppercase: true,
         enum: [ 'RECEBIDO', 'PENDENTE', 'AGENDADO' ]
     },
+    date: {
+        type: Date,
+        required: false
+    },
     id_billing: {
         type: String,
         required: true

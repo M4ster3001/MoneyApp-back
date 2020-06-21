@@ -15,13 +15,13 @@ class debitsBillings {
     }
 
     async insert( req, res ) {
-         
-        const { id_billing, name, value, status } = req.body;
-        const newCredit = new debitsBilling({ id_billing, name, value, status });
+        
+        const { id_billing, name, value, status, date } = req.body
+        const newDebit = new debitsBilling({ id_billing, name, value, status, date });
 
         try {
 
-            await newCredit.save( ( err, message ) => {
+            await newDebit.save( ( err, message ) => {
 
                 //return res.status( 401 ).json(err) 
                 if( err ) { 
@@ -77,13 +77,14 @@ class debitsBillings {
 
     async update( req, res ) {
 
-        let { id_billing, name, value, status } = req.body;
+        let { id_billing, name, value, status, date } = req.body;
         const { id } = req.params;
         let data_update = { id_billing };
 
         if( name ) data_update = { name };
         if( value ) data_update = { value };
         if( status ) data_update = { status };
+        if( date ) data_update = { date };
 
         await debitsBilling.findOneAndUpdate({ _id: id }, data_update, { new: true, useFindAndModify: true })
         .then( ( data ) => {

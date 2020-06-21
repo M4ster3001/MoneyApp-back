@@ -24,6 +24,10 @@ const debitsSchema = new Schema({
         uppercase: true,
         enum: [ 'PAGO', 'PENDENTE', 'AGENDADO' ]
     },
+    date: {
+        type: Date,
+        required: false
+    },
     id_billing: {
         type: String,
         required: true

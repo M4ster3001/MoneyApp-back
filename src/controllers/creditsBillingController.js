@@ -16,8 +16,8 @@ class creditsBillings {
 
     async insert( req, res ) {
          
-        const { id_billing, name, value, status } = req.body;
-        const newCredit = new creditsBilling({ id_billing, name, value, status });
+        const { id_billing, name, value, status, date } = req.body;
+        const newCredit = new creditsBilling({ id_billing, name, value, status, date });
 
         try {
 
@@ -77,13 +77,14 @@ class creditsBillings {
 
     async update( req, res ) {
 
-        let { id_billing, name, value, status } = req.body;
+        let { id_billing, name, value, status, date } = req.body;
         const { id } = req.params;
         let data_update = { id_billing };
 
         if( name ) data_update = { name };
         if( value ) data_update = { value };
         if( status ) data_update = { status };
+        if( date ) data_update = { date };
 
         await creditsBilling.findOneAndUpdate({ _id: id }, data_update, { new: true, useFindAndModify: true })
         .then( ( data ) => {

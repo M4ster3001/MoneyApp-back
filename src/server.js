@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import app from './app';
-import mongoose, { Error } from 'mongoose';
+import mongoose from 'mongoose';
 
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });

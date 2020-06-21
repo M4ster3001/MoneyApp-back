@@ -1,8 +1,8 @@
 const optionsCor = {
-    origin: process.env.API_URL || '*',
+    origin: [ process.env.API_URL || '*' ],
     methods: [ 'GET', 'PUT', 'POST', 'DELETE' ],
     credentials: true,
-    allowedHeaders: [ 'Content-type', 'Authorization' ] 
+    allowedHeaders: [ 'Content-type', 'Authorization', 'x-access-token' ] 
 }
 
 export default optionsCor;

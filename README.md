@@ -4,6 +4,7 @@
 
     - iniciando as configurações básicas(x)
     - autenticação com jwt(x)
+    - iniciando validações(x)
     - criando controllers
     - criando models
     - conexão com mongodb

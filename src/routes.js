@@ -26,8 +26,8 @@ routes.post( '/', ( req, res ) => { res.status( 200 ).json({ message: 'Ok post' 
 routes.get( '/login', ( req, res ) => { res.status( 200 ).json({ message: 'Ok login' }) } );
 
 //Users
-routes.post( '/login', User.validations, UserController.login );
-routes.get( '/user/register', User.validations, UserController.insert );
+routes.post( '/login', Login.validations, UserController.login );
+routes.post( '/user/register', User.validations, UserController.insert );
 routes.get( '/user/update/:id', [ auth, User.validations ], UserController.update );
 routes.get( '/user/delete/:id', [ auth, User.validations ], UserController.del );
 

@@ -16,6 +16,12 @@ import { Login, User } from './middleware/validation';
 import BillingCycles from './controllers/billingCycleController';
 const BillingCycle = new BillingCycles();
 
+import CreditsBilling from './controllers/creditsBillingController';
+const creditsBilling = new CreditsBilling();
+
+import DebitsBilling from './controllers//debitsBillingController';
+const debitsBilling = new DebitsBilling();
+
 import Users from './controllers/usersController';
 const UserController = new Users();
 
@@ -36,6 +42,16 @@ routes.get( '/billing', auth, BillingCycle.index );
 routes.post( '/billing', auth, BillingCycle.insert );
 routes.put( '/billing/update/:id', auth, BillingCycle.update );
 routes.delete( '/billing/delete/:id', auth, BillingCycle.del );
+
+//credits
+routes.post( '/billing/credits', auth, creditsBilling.insert );
+routes.put( '/billing/credits/update/:id', auth, creditsBilling.update );
+routes.delete( '/billing/credits/delete/:id', auth, creditsBilling.del );
+
+//debits
+routes.post( '/billing/debits', auth, debitsBilling.insert );
+routes.put( '/billing/debits/update/:id', auth, debitsBilling.update );
+routes.delete( '/billing/debits/delete/:id', auth, debitsBilling.del );
 
 routes.post( '/logout', ( req, res ) => {
 

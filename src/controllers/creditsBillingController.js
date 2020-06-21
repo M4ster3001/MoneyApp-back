@@ -1,10 +1,10 @@
-import billingCycle from '../models/billingCycle';
+import creditsBilling from '../models/creditsBilling';
 
-class BillingCycles {
+class creditsBillings {
 
     async index( req, res ) {
         
-        await billingCycle.find({}, ( err, data ) => {
+        await creditsBilling.find({}, ( err, data ) => {
 
             if( err ) { return res.status( 401 ).json({ error: `Erro: ${ err }` }) }
 
@@ -16,12 +16,12 @@ class BillingCycles {
 
     async insert( req, res ) {
          
-        const { id_user, name, month, year, credits, debts } = req.body;
-        const newBilling = new billingCycle({ id_user, name, month, year, credits, debts });
+        const { id_billing, name, value, status } = req.body;
+        const newCredit = new creditsBilling({ id_billing, name, value, status });
 
         try {
 
-            await newBilling.save( ( err, message ) => {
+            await newCredit.save( ( err, message ) => {
 
                 //return res.status( 401 ).json(err) 
                 if( err ) { 
@@ -77,15 +77,15 @@ class BillingCycles {
 
     async update( req, res ) {
 
-        let { id_user, name, month, year } = req.body;
+        let { id_billing, name, value, status } = req.body;
         const { id } = req.params;
-        let data_update = { id_user };
+        let data_update = { id_billing };
 
         if( name ) data_update = { name };
-        if( month ) data_update = { month };
-        if( year ) data_update = { year };
+        if( value ) data_update = { value };
+        if( status ) data_update = { status };
 
-        await billingCycle.findOneAndUpdate({ _id: id }, data_update, { new: true, useFindAndModify: true })
+        await creditsBilling.findOneAndUpdate({ _id: id }, data_update, { new: true, useFindAndModify: true })
         .then( ( data ) => {
 
             return res.status( 200 ).json({ success: true, up: data }); 
@@ -95,14 +95,13 @@ class BillingCycles {
             return res.status( 401 ).json(err)
         } )
 
-        //return res.status( 200 ).json({ success: true }); 
     }
 
     async del( req, res ) {
 
         const { id } = req.params;
 
-        await billingCycle.findOneAndDelete({ _id: id }, ( err, message ) => {
+        await creditsBilling.findOneAndDelete({ _id: id }, ( err, message ) => {
 
             if( err ) { return res.status( 401 ).json(err) }
 
@@ -114,4 +113,4 @@ class BillingCycles {
     }
 }
 
-export default BillingCycles; 
+export default creditsBillings; 

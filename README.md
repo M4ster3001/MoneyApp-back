@@ -8,3 +8,5 @@
     - criando controllers
     - criando models
     - conexão com mongodb
+
+    - dividindo os credits e debits do billingCycle

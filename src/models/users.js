@@ -1,19 +1,28 @@
 import mongoose from 'mongoose';
-const { Schema } = mongoose;
+const { Schema, Error } = mongoose;
 
 const users = new Schema(
     {
         name: {
             type: String,
-            required: true
+            required: [ 
+                true, 
+                "Informe o seu nome" 
+            ]
         },
         email: {
             type: String,
-            required: true
+            required: [
+                true,
+                "Informe um e-mail"
+            ]
         },
         password: {
             type: String,
-            required: true
+            required: [
+                true,
+                "Informe a senha"
+            ]
         },
         token: {
             type: String,
